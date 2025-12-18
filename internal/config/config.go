@@ -19,7 +19,7 @@ func LoadConfig() (*Config, error) {
 	_ = godotenv.Load()
 
 	config := &Config{
-		FuturAPIURL:     getEnv("FUTUR_API_URL", "http://localhost:3000"),
+		FuturAPIURL:     getEnv("FUTUR_API_URL", "http://localhost:3000/api"),
 		SFTPHostKeyPath: getEnv("SFTP_HOST_KEY_PATH", "./host_key"),
 		SFTPPort:        getEnv("SFTP_PORT", "2222"),
 	}

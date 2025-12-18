@@ -46,15 +46,6 @@ func NewWebAPIAuthenticator(baseURL string) *WebAPIAuthenticator {
 
 // AuthenticateUser authenticates a user against the web API (with fallback to hardcoded user)
 func (w *WebAPIAuthenticator) AuthenticateUser(username, password string) (*User, error) {
-	// Hardcoded user for testing
-	if username == "mika" && password == "taataataa11" {
-		log.Printf("Authentication successful for hardcoded user: %s", username)
-		return &User{
-			ID:       "1",
-			Username: username,
-			ApiKey:   password, // Store password as API key
-		}, nil
-	}
 
 	// Try API authentication (username already includes customer_ prefix)
 	authReq := AuthRequest{
@@ -67,7 +58,7 @@ func (w *WebAPIAuthenticator) AuthenticateUser(username, password string) (*User
 		return nil, fmt.Errorf("failed to marshal auth request: %w", err)
 	}
 
-	url := fmt.Sprintf("%s/api/futur/login", w.baseURL)
+	url := fmt.Sprintf("%s/login", w.baseURL)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Printf("HTTP request creation failed, falling back to hardcoded check: %v", err)

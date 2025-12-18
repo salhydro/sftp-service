@@ -29,7 +29,7 @@ func DownloadPricelist(baseURL, username, apiKey, remotePath string) ([]byte, er
 		Timeout: 30 * time.Second,
 	}
 
-	url := fmt.Sprintf("%s/api/futur/pricelist", baseURL)
+	url := fmt.Sprintf("%s/pricelist", baseURL)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create HTTP request: %w", err)
@@ -97,7 +97,7 @@ func SendOrderToAPI(apiURL, username, apiKey, filename, content string) error {
 		return fmt.Errorf("failed to marshal order: %w", err)
 	}
 
-	url := fmt.Sprintf("%s/api/futur/order", apiURL)
+	url := fmt.Sprintf("%s/order", apiURL)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 	if err != nil {
 		return fmt.Errorf("failed to create HTTP request: %w", err)

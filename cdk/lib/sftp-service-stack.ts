@@ -111,7 +111,7 @@ export class SftpServiceStack extends cdk.Stack {
         logGroup,
       }),
       environment: {
-        FUTUR_API_URL: 'https://test.hyd.fi',
+        FUTUR_API_URL: 'https://api.salhydro.fi/api/futur',
         SFTP_HOST_KEY_PATH: '/data/host_key',
         SFTP_PORT: '22',
       },
