@@ -102,10 +102,19 @@ func (s *Server) passwordCallback(conn ssh.ConnMetadata, password []byte) (*ssh.
 func (s *Server) handleConnection(conn net.Conn, sshConfig *ssh.ServerConfig) {
 	defer conn.Close()
 
+	remoteAddr := conn.RemoteAddr().String()
+	log.Printf("New TCP connection from %s", remoteAddr)
+
 	// Perform SSH handshake
 	sshConn, chans, reqs, err := ssh.NewServerConn(conn, sshConfig)
 	if err != nil {
-		log.Printf("SSH handshake failed: %v", err)
+		// EOF typically means the client (or NLB health check) closed the connection
+		// without completing the SSH handshake — log at lower verbosity
+		if err.Error() == "EOF" {
+			log.Printf("Connection from %s closed before SSH handshake (likely NLB health check)", remoteAddr)
+		} else {
+			log.Printf("SSH handshake failed from %s: %v", remoteAddr, err)
+		}
 		return
 	}
 	defer sshConn.Close()
@@ -113,7 +122,7 @@ func (s *Server) handleConnection(conn net.Conn, sshConfig *ssh.ServerConfig) {
 	// Get username and API key from permissions
 	username := sshConn.Permissions.Extensions["username"]
 	apiKey := sshConn.Permissions.Extensions["api_key"]
-	log.Printf("New SSH connection from %s for user %s", conn.RemoteAddr(), username)
+	log.Printf("SSH connection established from %s for user %s (session: %x)", remoteAddr, username, sshConn.SessionID())
 
 	// Handle global requests
 	go ssh.DiscardRequests(reqs)
