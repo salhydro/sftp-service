@@ -1,0 +1,959 @@
+{
+ "Description": "SFTP Service with Fargate and FUTUR API integration",
+ "Resources": {
+  "SftpServiceVpc0D871BD7": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/Resource"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet1SubnetB7280D29": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-north-1a",
+    "CidrBlock": "10.0.0.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PublicSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/Subnet"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet1RouteTableF3C2D1DA": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/RouteTable"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet1RouteTableAssociation63A21C30": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet1RouteTableF3C2D1DA"
+    },
+    "SubnetId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet1SubnetB7280D29"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/RouteTableAssociation"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet1DefaultRouteCB2E0973": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "SftpServiceVpcIGWF2FC74E3"
+    },
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet1RouteTableF3C2D1DA"
+    }
+   },
+   "DependsOn": [
+    "SftpServiceVpcVPCGWED675DF5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/DefaultRoute"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet1EIPAECBD31C": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/EIP"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet1NATGateway2219BA71": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "SftpServiceVpcPublicSubnetSubnet1EIPAECBD31C",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet1SubnetB7280D29"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "SftpServiceVpcPublicSubnetSubnet1DefaultRouteCB2E0973",
+    "SftpServiceVpcPublicSubnetSubnet1RouteTableAssociation63A21C30"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/NATGateway"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet2Subnet73416DE9": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-north-1b",
+    "CidrBlock": "10.0.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PublicSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/Subnet"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet2RouteTable80FD9DB9": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/RouteTable"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet2RouteTableAssociation68E4E43C": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet2RouteTable80FD9DB9"
+    },
+    "SubnetId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet2Subnet73416DE9"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/RouteTableAssociation"
+   }
+  },
+  "SftpServiceVpcPublicSubnetSubnet2DefaultRouteE8172207": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "SftpServiceVpcIGWF2FC74E3"
+    },
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet2RouteTable80FD9DB9"
+    }
+   },
+   "DependsOn": [
+    "SftpServiceVpcVPCGWED675DF5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/DefaultRoute"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet1Subnet8BB05201": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-north-1a",
+    "CidrBlock": "10.0.2.0/24",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PrivateSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/Subnet"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet1RouteTableAB761EBF": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/RouteTable"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet1RouteTableAssociation4E886629": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet1RouteTableAB761EBF"
+    },
+    "SubnetId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet1Subnet8BB05201"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/RouteTableAssociation"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet1DefaultRoute0CB27A3A": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet1NATGateway2219BA71"
+    },
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet1RouteTableAB761EBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/DefaultRoute"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet2SubnetD30FEEA9": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-north-1b",
+    "CidrBlock": "10.0.3.0/24",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PrivateSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/Subnet"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet2RouteTable4C22A319": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/RouteTable"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet2RouteTableAssociation6F2C8E64": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet2RouteTable4C22A319"
+    },
+    "SubnetId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet2SubnetD30FEEA9"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/RouteTableAssociation"
+   }
+  },
+  "SftpServiceVpcPrivateSubnetSubnet2DefaultRoute492C0FC9": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "SftpServiceVpcPublicSubnetSubnet1NATGateway2219BA71"
+    },
+    "RouteTableId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet2RouteTable4C22A319"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/DefaultRoute"
+   }
+  },
+  "SftpServiceVpcIGWF2FC74E3": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpServiceVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/IGW"
+   }
+  },
+  "SftpServiceVpcVPCGWED675DF5": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "SftpServiceVpcIGWF2FC74E3"
+    },
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpServiceVpc/VPCGW"
+   }
+  },
+  "SftpClusterBACF4775": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterName": "sftp-service-cluster"
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpCluster/Resource"
+   }
+  },
+  "SftpLogGroupC79A244B": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/sftp-service",
+    "RetentionInDays": 30
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpLogGroup/Resource"
+   }
+  },
+  "EfsSecurityGroupEC5F36AC": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for EFS",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "255.255.255.255/32",
+      "Description": "Disallow all traffic",
+      "FromPort": 252,
+      "IpProtocol": "icmp",
+      "ToPort": 86
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/EfsSecurityGroup/Resource"
+   }
+  },
+  "EfsSecurityGroupfromFuturSftpServiceStackSftpSecurityGroup4E9576C920492BAA8973": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "NFS access from SFTP containers",
+    "FromPort": 2049,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "EfsSecurityGroupEC5F36AC",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "SftpSecurityGroupD63D0265",
+      "GroupId"
+     ]
+    },
+    "ToPort": 2049
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/EfsSecurityGroup/from FuturSftpServiceStackSftpSecurityGroup4E9576C9:2049"
+   }
+  },
+  "SftpEfsFileSystem83B23A56": {
+   "Type": "AWS::EFS::FileSystem",
+   "Properties": {
+    "Encrypted": true,
+    "FileSystemTags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpEfsFileSystem"
+     }
+    ],
+    "LifecyclePolicies": [
+     {
+      "TransitionToIA": "AFTER_30_DAYS"
+     }
+    ],
+    "PerformanceMode": "generalPurpose",
+    "ThroughputMode": "bursting"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpEfsFileSystem/Resource"
+   }
+  },
+  "SftpEfsFileSystemEfsMountTarget121A30CC7": {
+   "Type": "AWS::EFS::MountTarget",
+   "Properties": {
+    "FileSystemId": {
+     "Ref": "SftpEfsFileSystem83B23A56"
+    },
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "EfsSecurityGroupEC5F36AC",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet1Subnet8BB05201"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpEfsFileSystem/EfsMountTarget1"
+   }
+  },
+  "SftpEfsFileSystemEfsMountTarget244088D92": {
+   "Type": "AWS::EFS::MountTarget",
+   "Properties": {
+    "FileSystemId": {
+     "Ref": "SftpEfsFileSystem83B23A56"
+    },
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "EfsSecurityGroupEC5F36AC",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "SftpServiceVpcPrivateSubnetSubnet2SubnetD30FEEA9"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpEfsFileSystem/EfsMountTarget2"
+   }
+  },
+  "SftpDataAccessPointC4B67CDD": {
+   "Type": "AWS::EFS::AccessPoint",
+   "Properties": {
+    "AccessPointTags": [
+     {
+      "Key": "Name",
+      "Value": "FuturSftpServiceStack/SftpDataAccessPoint"
+     }
+    ],
+    "FileSystemId": {
+     "Ref": "SftpEfsFileSystem83B23A56"
+    },
+    "PosixUser": {
+     "Gid": "0",
+     "Uid": "0"
+    },
+    "RootDirectory": {
+     "CreationInfo": {
+      "OwnerGid": "0",
+      "OwnerUid": "0",
+      "Permissions": "755"
+     },
+     "Path": "/data"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpDataAccessPoint/Resource"
+   }
+  },
+  "SftpTaskDefinitionTaskRole3E441B28": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpTaskDefinition/TaskRole/Resource"
+   }
+  },
+  "SftpTaskDefinition59540521": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "FUTUR_API_URL",
+        "Value": "https://api.salhydro.fi/api/futur"
+       },
+       {
+        "Name": "SFTP_HOST_KEY_PATH",
+        "Value": "/data/host_key"
+       },
+       {
+        "Name": "SFTP_PORT",
+        "Value": "22"
+       }
+      ],
+      "Essential": true,
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         "854586313951.dkr.ecr.eu-north-1.",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/futur-sftp-service:latest"
+        ]
+       ]
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "SftpLogGroupC79A244B"
+        },
+        "awslogs-stream-prefix": "sftp-service",
+        "awslogs-region": "eu-north-1"
+       }
+      },
+      "MountPoints": [
+       {
+        "ContainerPath": "/data",
+        "ReadOnly": false,
+        "SourceVolume": "sftp-data-volume"
+       }
+      ],
+      "Name": "SftpContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 22,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "512",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "SftpTaskDefinitionExecutionRole211B7703",
+      "Arn"
+     ]
+    },
+    "Family": "FuturSftpServiceStackSftpTaskDefinition9A8A5268",
+    "Memory": "1024",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "SftpTaskDefinitionTaskRole3E441B28",
+      "Arn"
+     ]
+    },
+    "Volumes": [
+     {
+      "EFSVolumeConfiguration": {
+       "AuthorizationConfig": {
+        "AccessPointId": {
+         "Ref": "SftpDataAccessPointC4B67CDD"
+        }
+       },
+       "FilesystemId": {
+        "Ref": "SftpEfsFileSystem83B23A56"
+       },
+       "TransitEncryption": "ENABLED"
+      },
+      "Name": "sftp-data-volume"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpTaskDefinition/Resource"
+   }
+  },
+  "SftpTaskDefinitionExecutionRole211B7703": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpTaskDefinition/ExecutionRole/Resource"
+   }
+  },
+  "SftpTaskDefinitionExecutionRoleDefaultPolicy59249A5F": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:ecr:eu-north-1:854586313951:repository/futur-sftp-service"
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "SftpLogGroupC79A244B",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "SftpTaskDefinitionExecutionRoleDefaultPolicy59249A5F",
+    "Roles": [
+     {
+      "Ref": "SftpTaskDefinitionExecutionRole211B7703"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpTaskDefinition/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "SftpSecurityGroupD63D0265": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for SFTP service",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": {
+       "Fn::GetAtt": [
+        "SftpServiceVpc0D871BD7",
+        "CidrBlock"
+       ]
+      },
+      "Description": "SFTP access from within VPC",
+      "FromPort": 22,
+      "IpProtocol": "tcp",
+      "ToPort": 22
+     }
+    ],
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpSecurityGroup/Resource"
+   }
+  },
+  "SftpService9EBD12BB": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "SftpClusterBACF4775"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "SftpContainer",
+      "ContainerPort": 22,
+      "TargetGroupArn": {
+       "Ref": "SftpTargetGroup2A943804"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "SftpSecurityGroupD63D0265",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "SftpServiceVpcPrivateSubnetSubnet1Subnet8BB05201"
+       },
+       {
+        "Ref": "SftpServiceVpcPrivateSubnetSubnet2SubnetD30FEEA9"
+       }
+      ]
+     }
+    },
+    "PlatformVersion": "LATEST",
+    "TaskDefinition": {
+     "Ref": "SftpTaskDefinition59540521"
+    }
+   },
+   "DependsOn": [
+    "SftpLoadBalancerSftpListenerFDFE9D96",
+    "SftpTaskDefinitionTaskRole3E441B28"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpService/Service"
+   }
+  },
+  "SftpLoadBalancerE6B60434": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Name": "sftp-service-nlb",
+    "Scheme": "internet-facing",
+    "Subnets": [
+     {
+      "Ref": "SftpServiceVpcPublicSubnetSubnet1SubnetB7280D29"
+     },
+     {
+      "Ref": "SftpServiceVpcPublicSubnetSubnet2Subnet73416DE9"
+     }
+    ],
+    "Type": "network"
+   },
+   "DependsOn": [
+    "SftpServiceVpcPublicSubnetSubnet1DefaultRouteCB2E0973",
+    "SftpServiceVpcPublicSubnetSubnet1RouteTableAssociation63A21C30",
+    "SftpServiceVpcPublicSubnetSubnet2DefaultRouteE8172207",
+    "SftpServiceVpcPublicSubnetSubnet2RouteTableAssociation68E4E43C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpLoadBalancer/Resource"
+   }
+  },
+  "SftpLoadBalancerSftpListenerFDFE9D96": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "SftpTargetGroup2A943804"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "SftpLoadBalancerE6B60434"
+    },
+    "Port": 22,
+    "Protocol": "TCP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpLoadBalancer/SftpListener/Resource"
+   }
+  },
+  "SftpTargetGroup2A943804": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckPort": "22",
+    "HealthCheckProtocol": "TCP",
+    "Port": 22,
+    "Protocol": "TCP",
+    "TargetType": "ip",
+    "VpcId": {
+     "Ref": "SftpServiceVpc0D871BD7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/SftpTargetGroup/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/31SwW7bMAz9lt4VLfWp1zRbiwBda9hFrwOjMB4bRQxEKkFg+N8HW3aS7tAT33ukhMcnFfZ+PrfzOzjJzG12M09r29YKbmfgJH9adIVtPw7OLLfho1yaMq09uTqtA2qvXVHFSfEd1h6v+lVbiLAjUOJwGe7Br1XZl1fQZ1A8wdmUkY6geL14FRRjwMtAdjKyhSq4v3sMamp0KZKenyOnw+DhW2EVmoginUEntl36JIqxn5rgE8QGevuy+4lbCjSZ/1/hoEAB4402nq0xHsnlQDLsjOdGbPvCzcXWhDuDW7HtE3msz6K475tf2W9OQd8hNqhm4RyKlExhiOmG9jtFW+GBhZTj+REEDcHethXn5xlqyZ7ckGdGnUEPouQ8w2YNHoKj0BwL276injjuXhg2j4Oek/rCpxkSxTD2Jzz2svHL3je060yFwinmsN6SHlL+VaPamcAbtJ/y41gU9v7Bzu8+hWgWU1Dao61y/QdHvZzVzwIAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "FuturSftpServiceStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "SftpEndpoint": {
+   "Description": "SFTP server endpoint (connect on port 22)",
+   "Value": {
+    "Fn::GetAtt": [
+     "SftpLoadBalancerE6B60434",
+     "DNSName"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

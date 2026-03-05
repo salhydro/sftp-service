@@ -1,0 +1,20 @@
+{
+  "version": "34.0.0",
+  "files": {
+    "863c0799ead8e67a6255a938ed205e7508e979bec7f9378d0fc28077c858211e": {
+      "source": {
+        "path": "FuturSftpServiceStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "854586313951-eu-north-1": {
+          "bucketName": "cdk-hnb659fds-assets-854586313951-eu-north-1",
+          "objectKey": "863c0799ead8e67a6255a938ed205e7508e979bec7f9378d0fc28077c858211e.json",
+          "region": "eu-north-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::854586313951:role/cdk-hnb659fds-file-publishing-role-854586313951-eu-north-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

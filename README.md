@@ -228,6 +228,19 @@ ps aux | grep sftp-service
 
 The project includes ready AWS CDK configuration for production deployment.
 
+### DNS Configuration
+
+The SFTP service is accessible via custom domain:
+
+- **SFTP endpoint**: `futur.salhydro.fi` (port 22)
+- **DNS type**: CNAME record pointing to NLB (`sftp-service-nlb-a6d5cd0da283ddea.elb.eu-north-1.amazonaws.com`)
+- **Region**: `eu-north-1` (Stockholm)
+
+```bash
+# Connect to production SFTP
+sftp futur.salhydro.fi
+```
+
 ### AWS Infrastructure:
 - **ECS Fargate** - Container execution
 - **Network Load Balancer** - SFTP traffic distribution

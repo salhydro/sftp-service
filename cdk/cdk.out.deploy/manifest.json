@@ -1,0 +1,299 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "FuturSftpServiceStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "FuturSftpServiceStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "FuturSftpServiceStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://854586313951/eu-north-1",
+      "properties": {
+        "templateFile": "FuturSftpServiceStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::854586313951:role/cdk-hnb659fds-deploy-role-854586313951-eu-north-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::854586313951:role/cdk-hnb659fds-cfn-exec-role-854586313951-eu-north-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-854586313951-eu-north-1/863c0799ead8e67a6255a938ed205e7508e979bec7f9378d0fc28077c858211e.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "FuturSftpServiceStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::854586313951:role/cdk-hnb659fds-lookup-role-854586313951-eu-north-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "FuturSftpServiceStack.assets"
+      ],
+      "metadata": {
+        "/FuturSftpServiceStack/SftpServiceVpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpc0D871BD7"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet1SubnetB7280D29"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet1RouteTableF3C2D1DA"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet1RouteTableAssociation63A21C30"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet1DefaultRouteCB2E0973"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet1EIPAECBD31C"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet1NATGateway2219BA71"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet2Subnet73416DE9"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet2RouteTable80FD9DB9"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet2RouteTableAssociation68E4E43C"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PublicSubnetSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPublicSubnetSubnet2DefaultRouteE8172207"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet1Subnet8BB05201"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet1RouteTableAB761EBF"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet1RouteTableAssociation4E886629"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet1DefaultRoute0CB27A3A"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet2SubnetD30FEEA9"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet2RouteTable4C22A319"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet2RouteTableAssociation6F2C8E64"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/PrivateSubnetSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcPrivateSubnetSubnet2DefaultRoute492C0FC9"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcIGWF2FC74E3"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpServiceVpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpServiceVpcVPCGWED675DF5"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpCluster/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpClusterBACF4775"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpLogGroupC79A244B"
+          }
+        ],
+        "/FuturSftpServiceStack/EfsSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EfsSecurityGroupEC5F36AC"
+          }
+        ],
+        "/FuturSftpServiceStack/EfsSecurityGroup/from FuturSftpServiceStackSftpSecurityGroup4E9576C9:2049": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EfsSecurityGroupfromFuturSftpServiceStackSftpSecurityGroup4E9576C920492BAA8973"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpEfsFileSystem/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpEfsFileSystem83B23A56"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpEfsFileSystem/EfsMountTarget1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpEfsFileSystemEfsMountTarget121A30CC7"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpEfsFileSystem/EfsMountTarget2": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpEfsFileSystemEfsMountTarget244088D92"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpDataAccessPoint/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpDataAccessPointC4B67CDD"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpTaskDefinition/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpTaskDefinitionTaskRole3E441B28"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpTaskDefinition/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpTaskDefinition59540521"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpTaskDefinition/ExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpTaskDefinitionExecutionRole211B7703"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpTaskDefinition/ExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpTaskDefinitionExecutionRoleDefaultPolicy59249A5F"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpSecurityGroupD63D0265"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpService/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpService9EBD12BB"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpLoadBalancer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpLoadBalancerE6B60434"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpLoadBalancer/SftpListener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpLoadBalancerSftpListenerFDFE9D96"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpTargetGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpTargetGroup2A943804"
+          }
+        ],
+        "/FuturSftpServiceStack/SftpEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SftpEndpoint"
+          }
+        ],
+        "/FuturSftpServiceStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/FuturSftpServiceStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/FuturSftpServiceStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "FuturSftpServiceStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
