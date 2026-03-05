@@ -148,11 +148,11 @@ func (fs *APIFileSystem) Filecmd(r *sftp.Request) error {
 		log.Printf("Delete denied: user %s tried to delete %s", fs.username, r.Filepath)
 		return fmt.Errorf("access denied: delete operations not allowed")
 	case "Mkdir":
-		log.Printf("Mkdir denied: user %s tried to delete %s", fs.username, r.Filepath)
+		log.Printf("Mkdir denied: user %s tried to create directory %s", fs.username, r.Filepath)
 		return fmt.Errorf("access denied: mkdir operations not allowed")
 	case "Rename":
 		// Deny all rename operations
-		log.Printf("Rename denied: user %s tried to delete %s", fs.username, r.Filepath)
+		log.Printf("Rename denied: user %s tried to rename %s", fs.username, r.Filepath)
 		return fmt.Errorf("access denied: rename operations not allowed")
 	case "Rmdir":
 		// Deny all directory removal operations
@@ -314,9 +314,16 @@ type incomingWriterAt struct {
 	data     []byte
 }
 
+const maxUploadSize = 102400 // 100KB upload limit
+
 func (w *incomingWriterAt) WriteAt(p []byte, off int64) (int, error) {
-	// Extend data slice if necessary
+	// Check upload size limit early to prevent memory exhaustion
 	needed := int(off) + len(p)
+	if needed > maxUploadSize {
+		return 0, fmt.Errorf("file size exceeds 100KB limit")
+	}
+
+	// Extend data slice if necessary
 	if needed > len(w.data) {
 		newData := make([]byte, needed)
 		copy(newData, w.data)

@@ -53,6 +53,7 @@ func (s *Server) Start() error {
 	// Configure SSH server
 	sshConfig := &ssh.ServerConfig{
 		PasswordCallback: s.passwordCallback,
+		MaxAuthTries:     3,
 	}
 	sshConfig.AddHostKey(s.hostKey)
 
@@ -207,7 +208,7 @@ func loadOrCreateHostKey(hostKeyPath string) (ssh.Signer, error) {
 	// Create new key
 	log.Printf("Creating new host key at %s", hostKeyPath)
 
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	privateKey, err := rsa.GenerateKey(rand.Reader, 4096)
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate RSA key: %w", err)
 	}
