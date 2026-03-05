@@ -2,7 +2,6 @@ package storage
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -69,41 +68,26 @@ type OrderRequest struct {
 	FileSize  int    `json:"file_size"`
 }
 
-// SendOrderToAPI sends the order data to the HTTP API with all parameters
+// SendOrderToAPI sends the order file content directly to the HTTP API
 func SendOrderToAPI(apiURL, username, apiKey, filename, content string) error {
 	// Check file size limit (100KB = 102400 bytes)
 	if len(content) > 102400 {
 		return fmt.Errorf("file size exceeds 100KB limit")
 	}
 
-	// Generate timestamp for the order
-	timestamp := time.Now().Format("20060102_150405")
-
 	// Create local HTTP client
 	client := &http.Client{
 		Timeout: 30 * time.Second,
 	}
 
-	orderReq := OrderRequest{
-		Username:  username,
-		Filename:  filename,
-		Content:   content,
-		Timestamp: timestamp,
-		FileSize:  len(content),
-	}
-
-	jsonData, err := json.Marshal(orderReq)
-	if err != nil {
-		return fmt.Errorf("failed to marshal order: %w", err)
-	}
-
+	// Send raw file content directly (API expects raw text, not JSON)
 	url := fmt.Sprintf("%s/order", apiURL)
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest("POST", url, bytes.NewBufferString(content))
 	if err != nil {
 		return fmt.Errorf("failed to create HTTP request: %w", err)
 	}
 
-	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Content-Type", "application/octet-stream")
 	req.Header.Set("User-Agent", "SFTP-Service/1.0")
 	req.Header.Set("X-ApiKey", apiKey)
 
