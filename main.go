@@ -8,6 +8,7 @@ import (
 
 	"sftp-service/internal/auth"
 	"sftp-service/internal/config"
+	"sftp-service/internal/proxy"
 	"sftp-service/internal/sftp"
 )
 
@@ -38,10 +39,20 @@ func main() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 
-	// Start server in a goroutine
+	// Start SFTP server in a goroutine
 	go func() {
 		if err := sftpServer.Start(); err != nil {
 			log.Fatalf("SFTP server error: %v", err)
+		}
+	}()
+
+	// Start HTTP proxy in a goroutine
+	go func() {
+		if err := proxy.Start(&proxy.Config{
+			FuturAPIURL: cfg.FuturAPIURL,
+			Port:        cfg.HTTPProxyPort,
+		}); err != nil {
+			log.Fatalf("HTTP proxy error: %v", err)
 		}
 	}()
 

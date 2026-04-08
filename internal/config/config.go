@@ -11,6 +11,7 @@ type Config struct {
 	FuturAPIURL     string
 	SFTPHostKeyPath string
 	SFTPPort        string
+	HTTPProxyPort   string
 }
 
 // LoadConfig loads configuration from environment variables
@@ -22,6 +23,7 @@ func LoadConfig() (*Config, error) {
 		FuturAPIURL:     getEnv("FUTUR_API_URL", "http://localhost:3000/api/futur"),
 		SFTPHostKeyPath: getEnv("SFTP_HOST_KEY_PATH", "./host_key"),
 		SFTPPort:        getEnv("SFTP_PORT", "2222"),
+		HTTPProxyPort:   getEnv("HTTP_PROXY_PORT", "80"),
 	}
 
 	// Validate required configuration

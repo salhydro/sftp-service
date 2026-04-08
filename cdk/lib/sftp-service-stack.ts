@@ -114,6 +114,7 @@ export class SftpServiceStack extends cdk.Stack {
         FUTUR_API_URL: 'https://api.salhydro.fi/api/futur',
         SFTP_HOST_KEY_PATH: '/data/host_key',
         SFTP_PORT: '22',
+        HTTP_PROXY_PORT: '80',
       },
     });
 
@@ -130,6 +131,12 @@ export class SftpServiceStack extends cdk.Stack {
       protocol: ecs.Protocol.TCP,
     });
 
+    // Add port mapping for HTTP proxy
+    container.addPortMappings({
+      containerPort: 80,
+      protocol: ecs.Protocol.TCP,
+    });
+
     // Security Group for SFTP service
     const sftpSecurityGroup = new ec2.SecurityGroup(this, 'SftpSecurityGroup', {
       vpc,
@@ -142,6 +149,13 @@ export class SftpServiceStack extends cdk.Stack {
       ec2.Peer.ipv4(vpc.vpcCidrBlock),
       ec2.Port.tcp(22),
       'SFTP access from within VPC'
+    );
+
+    // Allow HTTP proxy traffic (port 80) from within VPC (NLB will forward traffic)
+    sftpSecurityGroup.addIngressRule(
+      ec2.Peer.ipv4(vpc.vpcCidrBlock),
+      ec2.Port.tcp(80),
+      'HTTP proxy access from within VPC'
     );
 
     // Allow NFS traffic from SFTP containers to EFS
@@ -191,6 +205,28 @@ export class SftpServiceStack extends cdk.Stack {
       port: 22, // Standard SFTP port
       protocol: elbv2.Protocol.TCP,
       defaultTargetGroups: [targetGroup],
+    });
+
+    // Target Group for HTTP proxy
+    const httpTargetGroup = new elbv2.NetworkTargetGroup(this, 'HttpProxyTargetGroup', {
+      port: 80,
+      protocol: elbv2.Protocol.TCP,
+      vpc,
+      targetType: elbv2.TargetType.IP,
+      healthCheck: {
+        protocol: elbv2.Protocol.TCP,
+        port: '80',
+      },
+    });
+
+    // Add Fargate service to HTTP target group
+    service.attachToNetworkTargetGroup(httpTargetGroup);
+
+    // HTTP Listener for NLB
+    nlb.addListener('HttpProxyListener', {
+      port: 80,
+      protocol: elbv2.Protocol.TCP,
+      defaultTargetGroups: [httpTargetGroup],
     });
 
     // Outputs

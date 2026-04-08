@@ -32,8 +32,8 @@ COPY --from=builder /app/sftp-service .
 # Create directory for host key (will be mounted from EFS)
 RUN mkdir -p /data
 
-# Expose SFTP port
-EXPOSE 22
+# Expose SFTP port and HTTP proxy port
+EXPOSE 22 80
 
 # Set environment variables
 ENV SFTP_HOST_KEY_PATH=/data/host_key
